@@ -1,9 +1,11 @@
 <?php
 /**
- * secache 
- * 
+ * secache
+ * MTI licence
+ * pure-php coded key-value database engine created by shopex.
  * @version $Id$
- * @license MIT
+ *
+ * http://code.google.com/p/secache/
  */
 if(!defined('SECACHE_SIZE')){
     define('SECACHE_SIZE','15M');
@@ -23,7 +25,7 @@ class secache{
 
     var $idx_base_pos = 444; //40+20+24*16
     var $min_size = 10240; //10M最小值
-    var $schema_struct = array('size','free','lru_head','lru_tail','hits','miss'); 
+    var $schema_struct = array('size','free','lru_head','lru_tail','hits','miss');
     var $ver = '$Rev$';
     var $name = '系统默认缓存(文件型)';
 
@@ -136,25 +138,27 @@ class secache{
     }
 
     /**
-     * lock 
+     * lock
      * 如果flock不管用，请继承本类，并重载此方法
-     * 
+     *
      * @param mixed $is_block 是否阻塞
      * @access public
      * @return void
      */
     function lock($is_block,$whatever=false){
+        ignore_user_abort(1);
         return flock($this->_rs, $is_block?LOCK_EX:LOCK_EX+LOCK_NB);
     }
 
     /**
-     * unlock 
+     * unlock
      * 如果flock不管用，请继承本类，并重载此方法
-     * 
+     *
      * @access public
      * @return void
-     */   
+     */
     function unlock(){
+        ignore_user_abort(0);
         return flock($this->_rs, LOCK_UN);
     }
 
@@ -254,12 +258,12 @@ class secache{
     }
 
     /**
-     * search 
+     * search
      * 查找指定的key
      * 如果找到节点则$pos=节点本身 返回true
      * 否则 $pos=树的末端 返回false
-     * 
-     * @param mixed $key 
+     *
+     * @param mixed $key
      * @access public
      * @return void
      */
