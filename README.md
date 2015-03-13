@@ -1,5 +1,13 @@
 ![image](http://secache.googlecode.com/files/secache-logo.png)
 
+This class can be used to store and retrieve cached values from single file.
+It can store one or more keys in a single cache file.
+The class can also look up for a given key and retrieve the store value.
+
+It can lock the file during access to prevent corruption, but there is also a sub-class that can be used to access the cache file without locking it.
+
+It can automatically clean-up the least recently used entries to free space
+
 # php编写的文件型缓存解决方案
  * 纯php实现, 无须任何扩展，支持php4 / 5
  * 使用lru算法自动清理过期内容
